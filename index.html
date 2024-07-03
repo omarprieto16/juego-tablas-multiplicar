@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Tablas de Multiplicar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Juego de Tablas de Multiplicar</h1>
+        <div id="question-container">
+            <p id="question">Presiona 'Iniciar Juego' para comenzar</p>
+            <input type="number" id="answer" placeholder="Tu respuesta" disabled>
+        </div>
+        <div id="timer-container">
+            <p>Tiempo restante: <span id="timer">15</span> segundos</p>
+        </div>
+        <div id="controls">
+            <button id="start-button">Iniciar Juego</button>
+            <button id="restart-button" disabled>Reiniciar Juego</button>
+        </div>
+        <div id="score-container">
+            <p>Puntaje: <span id="score">0</span></p>
+        </div>
+    </div>
+    
+    <audio id="correct-sound" src="sounds/correct.mp3"></audio>
+    <audio id="incorrect-sound" src="sounds/incorrect.mp3"></audio>
+    <audio id="timeout-sound" src="sounds/timeout.mp3"></audio>
+    <audio id="win-sound" src="sounds/win.mp3"></audio>
+    <audio id="lose-sound" src="sounds/lose.mp3"></audio>
+    <script src="script.js"></script>
+</body>
+</html>
