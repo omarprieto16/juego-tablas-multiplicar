@@ -109,7 +109,7 @@ function checkAnswer(event) {
             }
             if (globalScore < 0) globalScore = 0;  // Asegurar que el puntaje global no sea menor a cero
             updateScore();
-            if (score >= 10) {
+            if (score >= 20) {
                 winSound.play();
                 endGame('ganar');
             } else if (score > -10) {
