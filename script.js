@@ -1,7 +1,11 @@
 let score = 0;
+let globalScore = 0;
 let timer;
 let currentAnswer;
 let timeRemaining;
+let correctAnswers = 0;
+let incorrectAnswers = 0;
+let gameNumber = 1;
 
 // Elements
 const questionElement = document.getElementById('question');
@@ -10,6 +14,8 @@ const scoreElement = document.getElementById('score');
 const timerElement = document.getElementById('timer');
 const startButton = document.getElementById('start-button');
 const restartButton = document.getElementById('restart-button');
+const resultsBody = document.getElementById('results-body');
+
 // Sounds
 const correctSound = document.getElementById('correct-sound');
 const incorrectSound = document.getElementById('incorrect-sound');
@@ -27,6 +33,9 @@ function startGame() {
     answerInput.disabled = false;
     answerInput.focus();
     score = 0;
+    globalScore = 0;
+    correctAnswers = 0;
+    incorrectAnswers = 0;
     scoreElement.textContent = score;
     generateQuestion();
 }
@@ -41,6 +50,7 @@ function restartGame() {
     score = 0;
     scoreElement.textContent = score;
     timerElement.textContent = 15;
+    updateResultsTable();
 }
 
 function generateQuestion() {
@@ -69,6 +79,7 @@ function countdown() {
             clearInterval(timer);
             timeoutSound.play();
             score--;
+            incorrectAnswers++;
             updateScore();
             if (score > -10) {
                 generateQuestion();
@@ -83,23 +94,30 @@ function countdown() {
 function checkAnswer(event) {
     if (event.key === 'Enter') {
         const playerAnswer = parseInt(answerInput.value);
-        clearInterval(timer);
-        if (playerAnswer === currentAnswer) {
-            score++;
-            correctSound.play();
-        } else {
-            score--;
-            incorrectSound.play();
-        }
-        updateScore();
-        if (score >= 20) {
-            winSound.play();
-            endGame('ganar');
-        } else if (score > -10) {
-            generateQuestion();
-        } else {
-            loseSound.play();
-            endGame('perder');
+        if (!isNaN(playerAnswer)) {
+            clearInterval(timer);
+            if (playerAnswer === currentAnswer) {
+                score++;
+                correctAnswers++;
+                globalScore += timeRemaining;
+                correctSound.play();
+            } else {
+                score--;
+                incorrectAnswers++;
+                globalScore -= 5;  // Penalización por error
+                incorrectSound.play();
+            }
+            if (globalScore < 0) globalScore = 0;  // Asegurar que el puntaje global no sea menor a cero
+            updateScore();
+            if (score >= 10) {
+                winSound.play();
+                endGame('ganar');
+            } else if (score > -10) {
+                generateQuestion();
+            } else {
+                loseSound.play();
+                endGame('perder');
+            }
         }
     }
 }
@@ -118,4 +136,27 @@ function endGame(result) {
     answerInput.disabled = true;
     startButton.disabled = false;
     restartButton.disabled = true;
+    updateResultsTable();
+}
+
+function updateResultsTable() {
+    const row = document.createElement('tr');
+    const gameCell = document.createElement('td');
+    const correctCell = document.createElement('td');
+    const incorrectCell = document.createElement('td');
+    const pointsCell = document.createElement('td');
+
+    gameCell.textContent = `#${gameNumber}`;
+    correctCell.textContent = correctAnswers;
+    incorrectCell.textContent = incorrectAnswers;
+    pointsCell.textContent = globalScore;
+
+    row.appendChild(gameCell);
+    row.appendChild(correctCell);
+    row.appendChild(incorrectCell);
+    row.appendChild(pointsCell);
+    
+    resultsBody.appendChild(row);
+    
+    gameNumber++;
 }
