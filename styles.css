@@ -16,6 +16,11 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#language {
+    text-align: right;
+    display: block;
+}
+
 #question-container {
     margin-bottom: 20px;
 }

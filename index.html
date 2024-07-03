@@ -8,10 +8,11 @@
 </head>
 <body>
     <div id="game-container">
+        <a href="https://omarprieto16.github.io/jogo-tabuada" id="language"><img src="img/brazil.svg" alt="Português" width="50"/></a>
         <h1>Juego de Tablas de Multiplicar</h1>
         <div id="question-container">
             <p id="question">Presiona 'Iniciar Juego' para comenzar</p>
-            <input type="number" id="answer" placeholder="Tu respuesta" disabled>
+            <input type="number" id="answer" step="1" oninput="validateInput(this)" placeholder="Tu respuesta" disabled>
         </div>
         <div id="timer-container">
             <p>Tiempo restante: <span id="timer">15</span> segundos</p>

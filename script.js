@@ -160,3 +160,8 @@ function updateResultsTable() {
     
     gameNumber++;
 }
+
+function validateInput(input) {
+    // Remover caracteres no numéricos, excepto el signo menos y los dígitos
+    input.value = input.value.replace(/[^-?\d]/g, '');
+}
